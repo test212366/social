@@ -1,0 +1,47 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^18",
+    "@types/nodemailer": "^6.4.8",
+    "@types/three": "^0.152.1",
+    "@types/uuid": "^9.0.2",
+    "nuxt": "^3.5.3",
+    "raw-loader": "^4.0.2",
+    "vite-plugin-glsl": "^1.1.2"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "@types/gsap": "^3.0.0",
+    "@vee-validate/nuxt": "^4.10.2",
+    "alea": "^1.0.1",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "google-auth-library": "^8.8.0",
+    "gsap": "^3.12.1",
+    "jsonwebtoken": "^9.0.0",
+    "lil-gui": "^0.18.2",
+    "mongoose": "^7.3.1",
+    "nodemailer": "^6.9.3",
+    "nuxt-vue3-google-signin": "^0.0.8",
+    "pinia": "^2.1.4",
+    "simplex-noise": "^4.0.1",
+    "three": "^0.153.0",
+    "three-msdf-text-utils": "^1.1.6",
+    "tween.js": "^16.6.0",
+    "uuid": "^9.0.0",
+    "vuex": "^4.1.0"
+  }
+}

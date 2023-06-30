@@ -9,7 +9,7 @@ class MailService {
         this.tranporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
-            secure: true,
+            // secure: true,
             auth: {
                 user: 'nzoxoriginal@gmail.com',
                 pass: 'pmxy qbpa gryi aamo',

@@ -3,22 +3,25 @@
 import nodemailer from 'nodemailer'
 
 class MailService {
-	tranporter: any
+	transporter: any
 
-    constructor() {
-        this.tranporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            // secure: true,
-            auth: {
-                user: 'nzoxoriginal@gmail.com',
-                pass: 'pmxy qbpa gryi aamo',
-            }
-        })
-    }
+	constructor() {
+		this.transporter = nodemailer.createTransport({
+		  host: 'smtp.gmail.com',
+		  port: 465,
+		  secure: true,
+		  auth: {
+			 user: 'nzoxoriginal@gmail.com',
+			 pass: 'pmxy qbpa gryi aamo',
+		  },
+		  tls: {
+			 rejectUnauthorized: false,
+		  },
+		});
+	 }
     async sendActivationEmail(to: string, link: string) {
 
-        await this.tranporter.sendMail({
+        await this.transporter.sendMail({
                 from: 'nzoxoriginal@gmail.com',
                 to,
                 subject: 'Activate account in ',

@@ -14,7 +14,7 @@ function getOauth2Client() {
 	const oAuth2Client = new OAuth2Client(
 	  '1094366230693-o4p7m2jepb1neslgl7593k7dqea96s4s.apps.googleusercontent.com',
 	  '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',
-	  'http://localhost:3000'
+	  'https://sparkly-sunflower-4dac43.netlify.app/'
 	);
  
 	return oAuth2Client;

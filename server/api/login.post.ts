@@ -27,6 +27,8 @@ export default defineEventHandler(async (event) => {
    await tokenService.saveToken(userDto.id, tokens.refreshToken)
    if(!user.isActivated) {
   		const activationLink = uuidv4()
+		user.activationLink = activationLink
+      await user.save()
  		await mailSend.sendActivationEmail(email, `${event.req.headers.host}/activate/${activationLink}`)
    }
    return {

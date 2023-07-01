@@ -20,6 +20,19 @@
 </template>
 
 
+
+<!-- // Ваш файл сценария
+if (navigator.userAgent.match(/iPhone/i)) {
+  // Замена 1 на 0.9 или другого значения по вашему выбору
+  document.documentElement.addEventListener('touchstart', function (event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, false);
+} -->
+
+
+
 <style  >
 	@font-face {
 		font-weight: 400;
@@ -45,6 +58,9 @@
 		font-weight: 300;
 		font-family: Roobert;
 		src: url("../assets/fonts/Roobert-Light.otf");
+	}
+	html, body {
+		touch-action: manipulation;
 	}
 	#__nuxt > div {
 		/* width: 414px; */

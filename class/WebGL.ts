@@ -49,6 +49,18 @@
 
 	const noise3D:any = createNoise3D(alea('seed'))
 
+
+	if (navigator.userAgent.match(/iPhone/i)) {
+
+		document.documentElement.addEventListener('touchstart', function (event) {
+			if (event.touches.length > 1) {
+				event.preventDefault();
+			}
+		}, false);
+		} 
+
+
+
  	export class WebGLScene {
 		scene: any
 		container: any

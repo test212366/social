@@ -1,7 +1,9 @@
 <script lang="ts">
 	 
 
-	
+
+	 
+
 
 </script>
 
@@ -21,16 +23,7 @@
 
 
 
-<!-- // Ваш файл сценария
-if (navigator.userAgent.match(/iPhone/i)) {
-  // Замена 1 на 0.9 или другого значения по вашему выбору
-  document.documentElement.addEventListener('touchstart', function (event) {
-    if (event.touches.length > 1) {
-      event.preventDefault();
-    }
-  }, false);
-} -->
-
+ 
 
 
 <style  >

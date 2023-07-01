@@ -18,6 +18,7 @@
 	<Messenger />
 	<Menu/>
 	<Loading/>
+	<TouchStart/>
 
 </template>
 

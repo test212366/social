@@ -1,31 +1,70 @@
 <script lang="ts">
 
 
+	export default {
+	
+		props: {
+			payload: {
+				type: String,
+				required: true
+			},
+			from: {
+				type: String,
+				required: true
+			},
+			to: {
+				type: String,
+				required: false
+			},
+			time: {
+				type: String,
+				require: false
+			},
+			isYou: {
+				type: Boolean,
+				require: true
+			}
+
+		},
+	}
+
 </script>
 
 
 <template> 
-		<div class="message">
-				<p class="massage__time">12:33</p>
-				<p class="message__target">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil, aut sapiente repellat assumenda sequi ducimus omnis est molestiae accusamus quasi. Pariatur facilis quod qui saepe quaerat aliquam totam minus cupiditate?</p>
-				<p class="message__who">:You</p>
+		<div id="message" :class="{ 'message__isntyou' : !isYou}">
+				<p id="massage__time" :class="{'message__time-isntyou' : !isYou}">{{time}}</p>
+				<p class="message__target">{{payload}}</p>
+				<p id="message__who" :class="{'message__who-isntyou' : !isYou}">{{isYou ? ':You' : 'To u:' }} </p>
 
 			</div>
-
+			
 
 </template>
 
 
 <style scoped>
-	 
-	.massage__time {
+	.message__who-isntyou {
+		left: 0 !important;
+		right: unset !important;
+	}
+	 .message__time-isntyou {
+		left: 0 !important;
+		right: unset !important;
+	 }
+	.message__isntyou {
+		padding-left: 42px;
+		width: unset !important;
+		justify-content: start !important;
+	}
+	 #massage__time {
 		position: absolute;
 		right: 0;
 		top: 0;
 		font-size: 13px;
 		color: #9e9e9e;
 	}
-	.message__who {
+	#message__who {
 		position: absolute;
 		font-size: 13px;
 		bottom: 0px;
@@ -39,13 +78,33 @@
 		font-size: 13px;
 		line-height: 18px;
 	}
-	.message {
+	@keyframes animateMessage {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		
+		to {
+			opacity: 1 !important;
+			transform: translateY(0) !important;
+		}
+	}
+	#message {
+		min-height: 40px;
 		margin-bottom: 40px;
 		position: relative;
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
+ 
+		animation-name: animateMessage;
+		animation-duration: 1s;
+		
 	}
+ 
+
+
 	@media screen and (max-width: 880px) {
 		.message__target {
 			max-width: 500px;
@@ -56,18 +115,15 @@
 			max-width: 400px;
 			font-size: 11px;
 		}
-		.massage__time {
+		#massage__time {
 			font-size: 11px;
 		}
-		.message__who {
+		#message__who {
 			font-size: 11px;
 		}
 	}
 	@media screen and (max-width: 560px) {
-		.massage__time {
-			top: unset;
-			bottom: 22px !important;
-		}
+		
 		.message__target {
 			max-width: 300px;
 		}

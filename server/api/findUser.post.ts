@@ -22,27 +22,15 @@ export default defineEventHandler(async (event) => {
    //  console.log('Current URL:', currentURL);
 	await db()	
 
-	const {email, password} = await readBody(event)
-	const user = await UserModel.findOne({ email })
-   if (!user) return { error: '1' }
-   const comparePassword = bcrypt.compareSync(password, user.password)
-   if (!comparePassword) return { error: '2' }
-   const userDto = new UserDto(user),
-   tokens = tokenService.generateTokens({...userDto})
-   await tokenService.saveToken(userDto.id, tokens.refreshToken)
-   if(!user.isActivated) {
-  		const activationLink = uuidv4()
-		user.activationLink = activationLink
-      await user.save()
+	const {userName} = await readBody(event)
+	
+	const user = await UserModel.findOne({userName})
+	if(!user) return {error: 'user name incorrect'}
 
-		await sendEmail(email, activationLink, event)
-  }
+
+
    return {
-		login: {
-			...tokens,
-			user
-		}
-      
+		user 
    }
  })
  

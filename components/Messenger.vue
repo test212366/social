@@ -6,6 +6,11 @@
 			store() {
 				return usePageStore()
 			}
+			 
+		},
+	 
+		data() {
+			return { message: ''}
 		},
 		methods: {
 			backChats() {
@@ -14,6 +19,10 @@
 				this.store.changeTrue()
 				this.store.backChat()
 				// this.store.hideChatsLetters('NIKITA ZMAN')
+			},
+			sendMessage() {
+				this.store.sendSocketMessage(this.message)
+				this.message = ''
 			}
 		}
 	}
@@ -26,33 +35,28 @@
 			<div @click="backChats" class="messenger__back">
 				<svg height="30px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="messenger__back" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>
 			</div>
+			
+			
+			<Message  v-for="item in store.chat" :time="item.time" :from="item.from" :isYou="item.from === store.user.userName" :to="item.to" :payload="item.payload"/>
 
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
-			 <Message/>
+		
+
+	 
 
 
 
 
 			<div   class="registration__inputs">
-				<svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+				<svg @click="sendMessage" version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 					width="25px" height="25px" viewBox="0 0 32 32" xml:space="preserve">
 		 
-				<path class="stone_een" d="M10.774,23.619l-1.625,5.691C9.06,29.164,9,28.992,9,28.794v-5.57l13.09-12.793L10.774,23.619z
-					M10.017,29.786c0.243-0.002,0.489-0.084,0.69-0.285l3.638-3.639l-2.772-1.386L10.017,29.786z M28.835,2.009L3.802,14.326
-					c-2.226,1.095-2.236,4.266-0.017,5.375l4.89,2.445L27.464,3.79c0.204-0.199,0.516-0.234,0.759-0.086
-					c0.326,0.2,0.396,0.644,0.147,0.935l-16.3,18.976l8.84,4.4c1.746,0.873,3.848-0.128,4.27-2.034l5.071-22.858
-					C30.435,2.304,29.588,1.639,28.835,2.009z"/>
+					<path class="stone_een" d="M10.774,23.619l-1.625,5.691C9.06,29.164,9,28.992,9,28.794v-5.57l13.09-12.793L10.774,23.619z
+						M10.017,29.786c0.243-0.002,0.489-0.084,0.69-0.285l3.638-3.639l-2.772-1.386L10.017,29.786z M28.835,2.009L3.802,14.326
+						c-2.226,1.095-2.236,4.266-0.017,5.375l4.89,2.445L27.464,3.79c0.204-0.199,0.516-0.234,0.759-0.086
+						c0.326,0.2,0.396,0.644,0.147,0.935l-16.3,18.976l8.84,4.4c1.746,0.873,3.848-0.128,4.27-2.034l5.071-22.858
+						C30.435,2.304,29.588,1.639,28.835,2.009z"/>
 				</svg>
-				<input id="input__mess" type="text" placeholder="Type Something..">
+				<input v-model="message" id="input__mess" type="text" placeholder="Type Something..">
 			</div>
 			
 		</div>
@@ -71,12 +75,14 @@
 		border-radius: 10px;
 	}
 	.messenger__back {
+		
 		position: absolute;
 		left: 20px;
 		top: 130px;
 		z-index: 10;
 	}
 	.messenger__back svg {
+		
 		transition: .3s ease all;
 		fill: rgb(126, 126, 126);
 	}
@@ -87,7 +93,7 @@
 		fill: #d8d8d86b;
 		position: absolute;
 		transition: .3s ease all;
-		right: 180px;
+		right: 160px;
 		bottom: 73px;
 		z-index: 1;
 	}
@@ -102,7 +108,7 @@
  
 	#messenger__wrapper {
 		/* opacity: 0; */
-		overflow-y: scroll;
+		overflow-y: auto;
 		padding-right: 10px;
 		height: calc(100vh - 112px - 130px) ;
 		 
@@ -110,6 +116,7 @@
 	}
 	#input__mess {
 		position: absolute;
+		padding-right: 80px;
 		padding-left: 30px !important;
 		bottom: 50px;
 		left: 50%;
@@ -149,6 +156,9 @@
 		#messenger__wrapper {
 			padding: 0 20px;
 		}
+		.registration__inputs svg {
+			right: 130px;
+		}
 	}
 	@media screen and (max-width: 950px) {
 
@@ -164,7 +174,7 @@
 			width: 20px;
 			height: 20px;
 			bottom: 72px;
-			right: 160px;
+			right: 130px;
 		}
 		.messenger__back {
 			top: 100px;
@@ -177,6 +187,7 @@
 	}
 
 	@media screen and (max-width: 880px) {
+		
 		.registration__inputs svg {
 			right: 40px;
 			bottom: 27px;
@@ -190,6 +201,7 @@
 		}
 		
 		#input__mess {
+			padding-right: 60px !important;
 			width:unset !important;
 			left: 10px !important;
 			transform: translateX(0) !important;
@@ -198,6 +210,14 @@
 		}
 	}
 	@media screen and (max-width: 500px) {
+		.registration__inputs svg {
+			right: 32px;
+		
+		}
+		#input__mess { 
+			padding-left: 20px !important;
+			padding-right: 48px !important;
+		}
 		#messenger__wrapper {
 			padding: 0 10px;
 			height: calc(100vh - 90px - 60px) ;

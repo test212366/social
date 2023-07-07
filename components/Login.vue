@@ -1,7 +1,10 @@
 <script lang="ts">
-
+	//@ts-ignore
+	// import {Email} from '../static/smtp'
 	import {usePageStore} from '~/stores/index'
 
+	// const { $mail } = useNuxtApp()
+	
 	export default {
 		data() {
 			return {
@@ -21,7 +24,23 @@
 				if(this.email.length > 5 && this.email.length <= 25 && this.password.length <= 10 && this.password.length >= 5) {
 					try {
 						this.store.setLoading()
-						
+						//@ts-ignore
+						//400c3d43-da28-48ca-ac50-0ef917c0c39f
+						console.log(this.$mail)
+						// this.$mail.setOptions({
+						// 	message: {
+						// 		to: this.email
+						// 	}
+						// })
+						 
+						//@ts-ignore
+						// this.$mail.send({
+						// 	from: 'John Doe',
+						// 	subject: 'Incredible',
+						// 	text: 'This is an incredible test message',
+						// })
+						 
+
 						const {data} = await useFetch('/api/login', {
 							headers: {
 								'Content-Type': 'application/json',
@@ -33,18 +52,39 @@
 							})
 						})
 						//@ts-ignore
-						const datai = data.value.login
-						if(datai.accessToken) {
-							localStorage.setItem('activationLink', datai.user.activationLink)
-							localStorage.setItem('token', datai.accessToken)
+						const datai = data.value
+						 //@ts-ignore
+
+						if(datai.error) {
+							//@ts-ignore
+							if(datai.error == '1' ) {
+								this.store.errorL('This Email', 'wrong')
+							} else {
+								this.store.errorL('this pass', 'wrong')
+							}
+							this.store.setLoading()
+							return
+						}
+
+//@ts-ignore
+						if(datai.login.accessToken) {
+						 //@ts-ignore
+						 //@ts-ignore
+
+							localStorage.setItem('token', datai.login.accessToken)
 						}
 					 
 						console.log(datai)
 						this.store.setLoading()
-						if(datai.accessToken) {
+					
+					
+
+						 //@ts-ignore
+
+						if(datai.login.accessToken) {
 							this.loginSucced = true
-						 
-							this.store.setUser(datai.user)
+						 //@ts-ignore
+							this.store.setUser(datai.login.user)
 							this.setChats()
 						} 
 
@@ -108,7 +148,7 @@
 
 <style>
 	.login__active {
-		top: 300px !important;
+		right: 50% !important;
 		opacity: 1 !important;
 		visibility: visible !important;
 	}
@@ -120,9 +160,9 @@
 		justify-content: center;
 		position: absolute;
 		opacity: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		top: 1000px;
+		right: 100%;
+		transform: translateX(50%);
+		top: 300px;
 		transition: 2s ease all;
 	}
 

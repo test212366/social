@@ -104,6 +104,13 @@
 
 
 <style>
+	.wrong-red {
+		border-color: #7a1616 !important;
+	 }
+	 .activeFind {
+		opacity: 1 !important;
+		top: 17% !important;
+	 }
 	.hide__music {
 		opacity: 0 !important;
 		visibility: hidden;
@@ -259,6 +266,8 @@
 		margin-top: 1px;
 	}
 	.header__welcome p {
+		overflow: hidden;
+		text-overflow: ellipsis;
 		width: 105px;
 		color: #9e9e9e;
 	}

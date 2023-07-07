@@ -1,42 +1,32 @@
-// const nodemailer = require('nodemailer')
 //@ts-ignore
-import nodemailer from 'nodemailer'
+import { useMailer } from '#mailer'
 
-class MailService {
-	transporter: any
+const mailService = useMailer()
+const gmailTransporter = mailService.gmailTransporter()
 
-	constructor() {
-		this.transporter = nodemailer.createTransport({
-		  host: 'smtp.gmail.com',
-		  port: 465,
-		  service: 'gmail',
-		  secure: false,
-		  auth: {
-			 user: 'nzoxoriginal@gmail.com',
-			 pass: 'pmxy qbpa gryi aamo',
-		  },
-		  tls: {
-			 rejectUnauthorized: false,
-		  },
-		});
-	 }
-    async sendActivationEmail(to: string, link: string) {
 
-        await this.transporter.sendMail({
-                from: 'nzoxoriginal@gmail.com',
-                to,
-                subject: 'Activate account in ',
-                text: '',
-                html: `
-				<section>
-					<h1>Подтверждение аккаунта NZox.</h1>
-					<p style="width: 80%">Перейдите по ссылке чтобы подтвердить аккаунт и наслаждайтесь всеми возможностями приложения.</p>
-					<a href=${link}>${link}</a>
-					<small>С ув. Никита Змановский</small>
-				</section>
-			`
-            }, (err: string, info: string) => console.log(err))
-    }
+export const sendEmail = async (email: string, activationLink: string, event: any) => {
+	try {
+		await mailService.sendMail({
+			client_id: "1094366230693-o4p7m2jepb1neslgl7593k7dqea96s4s.apps.googleusercontent.com",
+			options: {
+			  to: email,
+			  subject: '123123',
+			  text: '1321231',
+			  html: `
+			  <section>
+				  <h1>Подтверждение аккаунта NZox.</h1>
+				  <p style="width: 80%">Перейдите по ссылке чтобы подтвердить аккаунт и наслаждайтесь всеми возможностями приложения.</p>
+				  <a href="${event.req.headers.host}/activate/${activationLink}">${event.req.headers.host}/activate/${activationLink}</a>
+				  <small>С ув. Никита Змановский</small>
+			  </section>
+		  `
+			},
+			transporter: gmailTransporter
+		 })
+	} catch(e) {
+		console.log(e)
+	}
+ 
 }
-export default new MailService()
-// export default model('User', UserSchema)
+		 

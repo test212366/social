@@ -184,12 +184,36 @@
 			this.createCircleTornado()
 			
 		}
+		errorRegister(error: string) {
+			this.scene.remove(this.mesh7)
+			console.log(error)
+			const geometry2 = this.createTextGeometry(`${error}`, 42, true)
+			this.mesh7 = new THREE.Mesh(geometry2, this.materialText);
+			let s1 = 0.0006
+			this.mesh7.scale.set(s1,-s1, s1)
+			this.mesh7.position.y = 0.24
+			this.mesh7.position.x = -0.14
+
+			if(this.width <= 480) {
+				let s2 = 0.0005
+				this.mesh7.position.x = -.12
+				this.mesh7.scale.set(s2, -s2, s2)
+			}
+			if(this.width <= 350) {
+				let s2 = 0.00043
+				this.mesh7.scale.set(s2, -s2, s2)
+			}
+			console.log(this.mesh7)
+			this.scene.add(this.mesh7)
+			this.eraseOrAddText(4, 2)
+		}
 		eraseOrAddText(duration: number, value: number) {
 			gsap.to(this.materialText.uniforms.uProgress1, {
 				duration,
 				value,
 			})
 		}
+
 		backChat() {
 			// this.mesh14.position.y = 4
 			this.mesh12.position.y = 0.43
@@ -436,7 +460,7 @@
 			let s = 0.0015
 			let s1 = 0.0007
 
-			const geometry = this.createTextGeometry('Chats', 37)
+			const geometry = this.createTextGeometry(`Chats`, 37)
 		  	this.mesh12 = new THREE.Mesh(geometry, this.materialText);
 			this.mesh12.scale.set(s,-s,s)
 			this.mesh12.position.y = 0.45
@@ -544,7 +568,7 @@
 
 				this.mesh2.position.x = -.25
 				this.mesh3.geometry = this.createTextGeometry(`Lorem lskd o rel kjdkjfsl dslkfjsaj aljk djl 
-				jfkds jsdk jdkfjldfkjd`, 45)
+				jfkds jsdk jdkfjldfkjd  `, 45)
 				this.mesh3.position.x = -0.225
 				this.mesh3.scale.set(s2, -s2, s2)
 				
@@ -1046,9 +1070,18 @@
 			this.eraseOrAddText(4, 2)
 
 		}
-		addLoginText() {
+		addLoginText(err: any, err2: any) {
 			// if letters already created then we just set positions for this letters
 			
+			if(err ) {
+				this.scene.remove(this.mesh8)
+				this.scene.remove(this.mesh9)
+				this.mesh8 = ''
+				this.mesh9 = ''
+
+
+			}
+
 			
 			if(this.mesh8) {
 				this.mesh8.position.y = 0.4
@@ -1056,21 +1089,24 @@
 				this.eraseOrAddText(4, 2)
 				return
 			}
-			gsap.to(this.tubesGeometryGroup.rotation, {
-				duration: 3,
-				z: this.width <= 1000 ? Math.PI / 5 : Math.PI / 10,
-				ease: "power1.out"
-			})
+			if(!err) {
+				gsap.to(this.tubesGeometryGroup.rotation, {
+					duration: 3,
+					z: this.width <= 1000 ? Math.PI / 5 : Math.PI / 10,
+					ease: "power1.out"
+				})
+			}
+		 
 
 			let s = 0.0018
 
-			const geometry = this.createTextGeometry('Login To', 37)
+			const geometry = this.createTextGeometry(err ? err : 'Login To', 37)
 		  	this.mesh8 = new THREE.Mesh(geometry, this.materialText);
 			this.mesh8.scale.set(s,-s,s)
 			this.mesh8.position.y = 0.4
 			this.mesh8.position.x = -.32
 
-			const geometry1 = this.createTextGeometry('Account', 37)
+			const geometry1 = this.createTextGeometry(err2 ? err2 :'Account', 37)
 			this.mesh9 = new THREE.Mesh(geometry1, this.materialText);
 			this.mesh9.scale.set(s,-s,s)
 			this.mesh9.position.y = 0.32

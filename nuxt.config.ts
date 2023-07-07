@@ -2,8 +2,11 @@
 import path from 'path';
 import glsl from 'vite-plugin-glsl'
 
+ 
+
 export default defineNuxtConfig({
-	ssr: true,
+
+
   devtools: { enabled: true },
 	build: {
 		transpile: [
@@ -13,9 +16,44 @@ export default defineNuxtConfig({
 	googleSignIn: {
 		clientId: '1094366230693-o4p7m2jepb1neslgl7593k7dqea96s4s.apps.googleusercontent.com',
 	},
+	//@ts-ignore
+	serverMiddleware: [
+		{path: '/api', handler: '~/server/utils/SendMail'}	
+	],
+	runtimeConfig: {
+		mailerUser: '',
+		mailerPass: '',
+		mailerLog: '',  
+  },
 	modules: [
+		'nuxt-mailer',
+		// '@nuxtjs/axios',
+	 
+		// ['nuxt-mail', {
+		// 	smtp: {
+		// 	  service: 'gmail',
+		// 	  auth: {
+		// 		 user: 'nzoxoriginal@gmail.com',
+		// 		 pass: 'pmxy qbpa gryi aamo',
+		// 	  },
+		// 	},
+		//  }],
+		// ['nuxt-mail', {
+		// 	message: {
+		// 		to: ' ',
+		// 	},
+		// 	smtp: {
+		// 	host: 'smtp.gmail.com',
+		// 	port: 465,
+		// 	auth: {
+		// 		user: 'nzoxoriginal@gmail.com',
+		// 		pass: 'pmxy qbpa gryi aamo'
+		// 	},
+		// 	},
+		// }],
 		'@pinia/nuxt',
 		'nuxt-vue3-google-signin',
+		
 		[
 			'@vee-validate/nuxt',
 			{
@@ -32,15 +70,22 @@ export default defineNuxtConfig({
 		],
 	  
 	],
+	// runtimeConfig: {
+	// 	MAILHOST: 'smtp.ethereal.email',
+	// 	MAILPORT: '587',
+	// 	MAILUSER: 'nzoxoriginal@gmail.com',
+	// 	MAILPASSWORD: 'pmxy qbpa gryi aamo',
+	// 	// CONTACTMAIL: 'nzoxoriginal@gmail.com'
+	// },
 	//@ts-ignore
 	// serverMiddleware: [
 	// 	{ path: '/api/activate', handler: './server/server-middleware/rest.ts' }
 	//  ],
 	//@ts-ignore
 	head: {
-		
+		title: 'Sauzge',
 		meta: [
-			{ name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' }
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' }
 		],
 		// ...
 	 },

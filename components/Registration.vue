@@ -25,6 +25,8 @@
 		methods: {
 			async loginPage() {
 				if(this.store.animationText) return
+				// if(this.)
+	 
 				if(this.email.length > 5 && this.email.length <= 25 && this.userName.length >= 3 && this.userName.length <= 9  && this.password.length <= 10 && this.password.length >= 5) {
 					try {
 						this.store.setLoading()
@@ -41,20 +43,38 @@
 								userName: this.userName
 							})
 						})
-						console.log(data)
+						// console.log(data)
 						//@ts-ignore
-						const datai = data.value.registration
-						if(datai.accessToken) {
-							localStorage.setItem('activationLink', datai.user.activationLink)
-							localStorage.setItem('token', datai.accessToken)
+						const datai = data.value
+						// console.log(datai)
+						//@ts-ignore
+						if(datai.error) {
+							this.store.setLoading()
+							console.log(datai.error)
+							//@ts-ignore
+							
+							 this.store.errorR(datai.error)
+							 return
+						}
+							//@ts-ignore
+						
+						if(datai.registration.accessToken) {
+						//@ts-ignore
+						
+						//@ts-ignore
+						
+							localStorage.setItem('token', datai.registration.accessToken)
 						}
 					 
 						this.store.setLoading()
+						//@ts-ignore
 
-						if(datai.accessToken) {
+						if(datai.registration.accessToken) {
 							this.registerSucced = true
 							this.store.confirmAccount()
-							this.store.setUser(datai.user)
+						//@ts-ignore
+
+							this.store.setUser(datai.registration.user)
 
 						}  
 					
@@ -238,7 +258,7 @@
 		/* transform: rotate(90deg); */
 		width: 100%;
 		height: 0px;
-		border-color: #252525;
+		border-color: #000000;
 	}
 	#regstration__button:hover svg {
 		transform: rotate(180deg);

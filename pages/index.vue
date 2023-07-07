@@ -1,31 +1,4 @@
 <script lang="ts">
-
- 
-	 
-	// import { v4 as uuid } from "uuid"
-
-	// const { $socket } = useNuxtApp()
-	// const uid = uuid()
- 
- 	// export default {
-	// 	mounted() {
-	// 		//@ts-ignore
-	// 		$socket.onopen = () => {
-			
-	// 			localStorage.setItem(`connection-${uid}`, uid)
-	// 		//@ts-ignore
-
-	// 			$socket.send(uid)
-	// 		}
-	// 		//@ts-ignore
-
-	// 		$socket.onclose = function () {
-	// 			console.log("disconnected")
-	// 		}
-	// 	}
-	// }
-
-
 </script>
 
 <template> 

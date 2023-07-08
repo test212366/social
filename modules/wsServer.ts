@@ -10,8 +10,10 @@ export default defineNuxtModule({
     nuxt.hook("listen", (server) => {
 
       const wss = new WebSocketServer({ server })
-      nuxt.hook("close", () => wss.close())
+		console.log(123)
+      // nuxt.hook("close", () => wss.close())
       wss.on("connection", (ws, req) => {
+			console.log('connet')
 			const params = new URLSearchParams(req.url?.split('?')[1])
 			const userName: any = params.get('userName')
 			// console.log(userName)

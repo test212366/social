@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   },
 	modules: [
 		'nuxt-mailer',
+		'./modules/wsServer.ts',
 		// '@nuxtjs/axios',
 	 
 		// ['nuxt-mail', {

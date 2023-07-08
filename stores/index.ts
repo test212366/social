@@ -195,76 +195,82 @@ export const usePageStore = defineStore('counter', {
 			//CREATE LOGIC
 		},
 		socketConnection() {
-			const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:"
-			const query = new URLSearchParams()
-			//@ts-ignore
-			query.append('userName', this.user.userName)
-			console.log(query)
-			//@ts-ignore
-			this.ws = new WebSocket(`${wsProtocol}//${window.location.host}?${query.toString()}`)
-			//@ts-ignore
-			
-			this.ws.onopen = () => console.log("connected")
-			//@ts-ignore
-		
-			//@ts-ignore
-
-			this.ws.onmessage = async (e) => {
-				const message = JSON.parse(e.data)
-
+			try {
+				console.log('try connection')
+				const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:"
+				const query = new URLSearchParams()
 				//@ts-ignore
-				if(message.from === this.user.userName && message.to === 'BOT_S') {
-					console.log('send myself message to bot', message.payload)
-					console.log(message)
-					
-					//@ts-ignore
-					this.chat.push(message)
-				} else {
-					//@ts-ignore
-
-					console.log( message.to === this.user.userName && message.from !== this.chatUserName)
-
-					//@ts-ignore
-					if(message.from === this.user.userName ) {
-						//@ts-ignore
-						this.chat.push(message)
-
-					}
-					//@ts-ignore
-					if(message.to === this.user.userName && message.from === this.chatUserName) {
-					//@ts-ignore
-						
-						this.chat.push(message)
-						//@ts-ignore
-					} 
-					//@ts-ignore
-					
-					if( message.to === this.user.userName && message.from !== this.chatUserName) {
-						console.log(123)
-						setTimeout( async () => {
-							const res = await useFetch('/api/findUser', {
-								headers: {
-									'Content-Type': 'application/json',
-								},
-								method: 'POST',
-								body: JSON.stringify({
-									//@ts-ignore
-									userName: this.user.userName
-								})
-							})
-							const dataf = res.data.value
-							console.log(dataf)
-							//@ts-ignore
-							this.user.chats = dataf.user.chats
-						}, 1000)
-						//get Chats
-						 
-					}
-
-					console.log('emit message from user or myself')
-				}
+				query.append('userName', this.user.userName)
+				console.log(query)
+				//@ts-ignore
+				this.ws = new WebSocket(`${wsProtocol}//${window.location.host}?${query.toString()}`)
+				//@ts-ignore
 				
+				this.ws.onopen = () => console.log("connected")
+				//@ts-ignore
+			
+				//@ts-ignore
+	
+				this.ws.onmessage = async (e) => {
+					const message = JSON.parse(e.data)
+	
+					//@ts-ignore
+					if(message.from === this.user.userName && message.to === 'BOT_S') {
+						console.log('send myself message to bot', message.payload)
+						console.log(message)
+						
+						//@ts-ignore
+						this.chat.push(message)
+					} else {
+						//@ts-ignore
+	
+						console.log( message.to === this.user.userName && message.from !== this.chatUserName)
+	
+						//@ts-ignore
+						if(message.from === this.user.userName ) {
+							//@ts-ignore
+							this.chat.push(message)
+	
+						}
+						//@ts-ignore
+						if(message.to === this.user.userName && message.from === this.chatUserName) {
+						//@ts-ignore
+							
+							this.chat.push(message)
+							//@ts-ignore
+						} 
+						//@ts-ignore
+						
+						if( message.to === this.user.userName && message.from !== this.chatUserName) {
+							console.log(123)
+							setTimeout( async () => {
+								const res = await useFetch('/api/findUser', {
+									headers: {
+										'Content-Type': 'application/json',
+									},
+									method: 'POST',
+									body: JSON.stringify({
+										//@ts-ignore
+										userName: this.user.userName
+									})
+								})
+								const dataf = res.data.value
+								console.log(dataf)
+								//@ts-ignore
+								this.user.chats = dataf.user.chats
+							}, 1000)
+							//get Chats
+							 
+						}
+	
+						console.log('emit message from user or myself')
+					}
+					
+				}
+			} catch(e) {
+				console.log(e)
 			}
+			 
 
 		},
 	 

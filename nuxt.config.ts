@@ -8,6 +8,11 @@ export default defineNuxtConfig({
 
 
   devtools: { enabled: true },
+  //@ts-ignore
+  serverMiddleware: [
+	// Will register file from project server-middleware directory to handle /server-api/* requests
+		{ path: "/server-api", handler: "~/server-middleware/index.ts" },
+ 	],
 	build: {
 		transpile: [
 			'three'
@@ -25,6 +30,7 @@ export default defineNuxtConfig({
 		mailerPass: '',
 		mailerLog: '',  
   },
+
 	modules: [
 		'nuxt-mailer',
 		'./modules/wsServer.ts',

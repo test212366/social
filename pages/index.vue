@@ -12,7 +12,7 @@
 	<Messenger />
 	<Menu/>
 	<Loading/>
-	<TouchStart/>
+	<!-- <TouchStart/> -->
 
 </template>
 
@@ -53,6 +53,9 @@
 	#__nuxt > div {
 		/* width: 414px; */
 		overflow: hidden;
+	}
+	input {
+		touch-action: manipulation !important;
 	}
 	body {
 		overscroll-behavior: none;

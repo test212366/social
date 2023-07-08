@@ -13,15 +13,9 @@
 			return { message: ''}
 		},
 		methods: {
-			backChats() {
-				this.store.changeFalse()
-				this.store.decrement('CHATS')
-				this.store.changeTrue()
-				this.store.backChat()
-				// this.store.hideChatsLetters('NIKITA ZMAN')
-			},
+			 
 			sendMessage() {
-				this.store.sendSocketMessage(this.message)
+				this.store.sendSocketMessage(this.message.trim())
 				this.message = ''
 			}
 		}
@@ -32,10 +26,7 @@
 <template> 
 	<section id="messenger" :class="{'active__messanger' : store.currentPage === 4}">
 		<div id="messenger__wrapper">
-			<div @click="backChats" class="messenger__back">
-				<svg height="30px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="messenger__back" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>
-			</div>
-			
+			 
 			
 			<Message  v-for="item in store.chat" :time="item.time" :from="item.from" :isYou="item.from === store.user.userName" :to="item.to" :payload="item.payload"/>
 
@@ -74,21 +65,7 @@
 		background-color: #3737373a;
 		border-radius: 10px;
 	}
-	.messenger__back {
-		
-		position: absolute;
-		left: 20px;
-		top: 130px;
-		z-index: 10;
-	}
-	.messenger__back svg {
-		
-		transition: .3s ease all;
-		fill: rgb(126, 126, 126);
-	}
-	.messenger__back:hover svg {
-		fill: white;
-	}
+	 
 	.registration__inputs svg {
 		fill: #d8d8d86b;
 		position: absolute;

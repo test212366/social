@@ -5,7 +5,13 @@
 		data() {
 			return {
 				changeName: false,
-				changePassword: false
+				newName: '',
+				changePassword: false,
+				wrongNewName: false,
+				passwordNew: '',
+				passwordOld: '',
+				wrongNewPassword: false,
+
 			}
 		},
 	
@@ -36,6 +42,60 @@
 			},
 			changepassword() {
 				this.changePassword = !this.changePassword
+			},
+			async changeNameButton() {
+				try {
+					const {data} = await useFetch('/api/changeName', {
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						method: 'POST',
+						body: JSON.stringify({
+							//@ts-ignore
+							userName: this.store.user.userName,
+							newName: this.newName.trim()
+						})
+					})
+					const datai = data.value
+					//@ts-ignore
+					if(datai.err) {
+						this.newName = ''
+						return this.wrongNewName = true
+					}
+					window.location.reload()
+
+				} catch(e) {
+					console.log(e)
+				}
+			},
+			async changePasswordButton() {
+				try {
+					const {data} = await useFetch('/api/changePassword', {
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						method: 'POST',
+						body: JSON.stringify({
+							//@ts-ignore
+							userName: this.store.user.userName,
+							passwordOld: this.passwordOld,
+							passwordNew: this.passwordNew,
+						})
+					})
+					const datai = data.value
+					console.log(datai)
+					//@ts-ignore
+					if(datai.err) {
+						this.passwordOld = ''
+						this.passwordNew = ''
+
+						return this.wrongNewPassword = true
+					}
+					window.location.reload()
+
+				} catch(e) {
+					console.log(e)
+				}
 			}
 			 
 	}
@@ -80,13 +140,13 @@
 
 		</div>
 		<div id="change__name" :class="{'menu__active-name' : changeName}">
-			<input placeholder="new Name" type="text">
-			<button>Save</button>
+			<input v-model="newName" :class="{'wrongN' : wrongNewName}" placeholder="new Name" type="text">
+			<button @click="changeNameButton">Save</button>
 		</div>
 		<div id="change__name" :class="{'menu__active-name' : changePassword}">
-			<input type="text" placeholder="first password">
-			<input type="text" placeholder="new password">
-			<button>Save</button>
+			<input v-model="passwordOld" :class="{'wrongN' : wrongNewPassword}" type="text" placeholder="first password">
+			<input v-model="passwordNew" :class="{'wrongN' : wrongNewPassword}" type="text" placeholder="new password">
+			<button @click="changePasswordButton">Save</button>
 		</div>
 
 
@@ -100,6 +160,9 @@
 
 
 <style>	
+	.wrongN {
+		border-color: rgb(144, 0, 0) !important;
+	}
 	.menu__active-name {
 		opacity: 1 !important;
 		transform: translateX(0) !important;
@@ -121,6 +184,7 @@
 
 	}
 	#change__name input {
+		transition: .5s ease all;
 		padding: 0 30px; 
 		outline: none;
 		transition: .7s ease all;
@@ -157,13 +221,13 @@
 		height: 65px;
 	}
 	#menu__controller {
-		transition: .5s ease all;
+		transition: 1s ease all;
 		margin-top: 100px;
 		display: flex;
 		flex-direction: column;
 	}
 	#menu__controller button {
-		transition: .7s ease all;
+		transition: 1s ease all;
 		margin: 13px;
 		height: 46px;
 		border-radius: 30px;
@@ -259,6 +323,7 @@
 		#menu__controller button, #change__name button, #change__name input {
 			height: 40px;
 			font-size: 11px !important;
+			margin-bottom:4px;
 		}
 		.menu__close {
 			right: 40px;

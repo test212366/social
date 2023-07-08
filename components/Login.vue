@@ -22,6 +22,10 @@
 			async backRegister() {
 				if(this.store.animationText) return
 				if(this.email.length > 5 && this.email.length <= 25 && this.password.length <= 10 && this.password.length >= 5) {
+
+					
+					// this. = this.email.trim()
+
 					try {
 						this.store.setLoading()
 						//@ts-ignore
@@ -47,8 +51,8 @@
 							},
 							method: 'POST',
 							body: JSON.stringify({
-								email: this.email,
-								password: this.password,
+								email: this.email.trim(),
+								password: this.password.trim(),
 							})
 						})
 						//@ts-ignore

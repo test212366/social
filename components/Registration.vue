@@ -28,6 +28,9 @@
 				// if(this.)
 	 
 				if(this.email.length > 5 && this.email.length <= 25 && this.userName.length >= 3 && this.userName.length <= 9  && this.password.length <= 10 && this.password.length >= 5) {
+
+					
+
 					try {
 						this.store.setLoading()
 						// this.loading = true
@@ -38,9 +41,9 @@
 							},
 							method: 'POST',
 							body: JSON.stringify({
-								email: this.email,
-								password: this.password,
-								userName: this.userName
+								email: this.email.trim(),
+								password: this.password.trim(),
+								userName: this.userName.trim()
 							})
 						})
 						// console.log(data)

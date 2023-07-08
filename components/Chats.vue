@@ -127,7 +127,7 @@
 	}
 	.registration__active {
 		opacity: 1 !important;
-		transform: translateY(0) !important;
+		transform: translateY(10%) !important;
 	}
 	.chats__amount {
 		overflow-y: auto;
@@ -194,7 +194,7 @@
 	
 	@media screen and (max-width: 790px) {
 		.chats__amount {
-			height:  calc(100vh - 35% );
+			height:  calc(100vh - 40% );
 		}
 		.chats__amount::-webkit-scrollbar {
 			width: 3px;

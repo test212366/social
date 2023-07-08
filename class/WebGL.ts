@@ -152,7 +152,7 @@
 			)
 	
 			this.camera.position.set(0, 0, 1) 
-			this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+			// this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 			this.time = 0
 
 

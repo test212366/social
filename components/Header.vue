@@ -8,6 +8,13 @@
 			}
 		},
 		methods: {
+			backChats() {
+				this.store.changeFalse()
+				this.store.decrement('CHATS')
+				this.store.changeTrue()
+				this.store.backChat()
+				// this.store.hideChatsLetters('NIKITA ZMAN')
+			},
 			openMenu() {
 				this.store.setMenuOpen()
 			}
@@ -21,7 +28,11 @@
 	<header>
 		<section class="container">
 			<div class="header__logo">
-				<svg version="1.1" width="30px" height="30px" fill="#fff" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				<div @click="backChats" id="messenger__back" :class="{'show__arr' : store.currentPage === 4}">
+					<svg height="30px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="messenger__back" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/></svg>
+				</div>
+			
+				<svg :class="{'hidden__hed' : store.currentPage === 4}" version="1.1" width="30px" height="30px" fill="#fff" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 317.536 317.536" style="enable-background:new 0 0 317.536 317.536;" xml:space="preserve">
 					<g>
 						<path d="M103.616,221.205c37.822-7.288,112.142-24.705,143.441-53.651c-2.918-4.087-40.701-23.574-40.701-23.574s44.988,0,63.195,0
@@ -75,7 +86,7 @@
 					<g>
 					</g>
 				</svg>
-				<p >
+				<p class="header__title-l">
 					SAUZGE
 				</p>
 				<div class="header__welcome"> 
@@ -104,12 +115,38 @@
 
 
 <style>
+	.show__arr {
+		opacity: 1 !important;
+		transform: translateX(0) !important;
+	}
+	.hidden__hed {
+		opacity: 0 !important;
+	}
+	#messenger__back {
+		transition: .5s ease all;
+		opacity: 0 ;
+		
+		transform: translateX(-200%) ;
+		position: absolute;
+		left: 20px;
+		top: 73px;
+		z-index: 10;
+	}
+	#messenger__back svg {
+		transform: none !important;
+		 
+		transition: .3s ease all;
+		fill: rgb(126, 126, 126);
+	}
+	#messenger__back:hover svg {
+		fill: white;
+	}
 	.wrong-red {
 		border-color: #7a1616 !important;
 	 }
 	 .activeFind {
 		opacity: 1 !important;
-		top: 17% !important;
+		top: 12% !important;
 	 }
 	.hide__music {
 		opacity: 0 !important;
@@ -245,12 +282,13 @@
 
 	}
 	.header__logo svg {
+		transition: .5s ease all;
 		transform: scale(-1, 1);
 	}
-	.header__logo p:nth-child(2) {
+	.header__title-l {
 		margin-left: 10px;
 		font-size: 18px;
-		/* color: red; */
+	
 		
 		letter-spacing: 1.2px;
 		font-weight: 600;
@@ -301,7 +339,9 @@
 			right: 32px !important;
 			top: 50px !important;
 		}
- 
+		#messenger__back {
+			top: 48px;
+		}
 		#header__menu div {
 			width: 26px;
 			margin-left: 10px;
@@ -312,7 +352,7 @@
 		.active__registration {
 			bottom: 70px !important;
 		}
-		.header__logo p:nth-child(2) {
+		.header__title-l {
 			font-size: 14px;
 		}
 		.header__welcome p {
@@ -334,7 +374,11 @@
 		}
 	}
 	@media screen and (max-width: 500px) {
-		.header__logo p:nth-child(2) {
+		#messenger__back {
+			top: 45px;
+			left: 10px;
+		}
+		.header__title-l {
 			font-size: 12px;
 		}
 		header {

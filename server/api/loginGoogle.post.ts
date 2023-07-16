@@ -1,6 +1,6 @@
 import db from '../db'
 import UserModel from '../models/userModel'
-import mailSend from '../utils/SendMail'
+
 import tokenService from '../utils/Token'
 import UserDto from '../models/userDto'
 // import bcrypt from 'bcryptjs'
@@ -20,6 +20,20 @@ function getOauth2Client() {
 	return oAuth2Client;
  }
 
+ 
+const getDate = () => {
+	const date = new Date()
+	const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+	const dayofWeek = date.getDay()
+	let min:any = date.getMinutes()
+
+	if(min < 10) min = `0${min}`
+	// console.log(date.getMonth(), date.getDay())
+
+	const dayOfWeek = week[dayofWeek];
+
+	return `${dayOfWeek}, ${date.getHours()}:${min}`
+}
 export default defineEventHandler(async (event) => {
 	// //@ts-ignore
 	// const {req} = event
@@ -53,6 +67,13 @@ export default defineEventHandler(async (event) => {
             return { user, tokens }
         } else {
             const user = await UserModel.create({
+					chats: [
+						{
+							userName: 'BOT_S',
+							time: getDate(),
+							lastMessage: 'test'
+						}
+					 ],
                 email: payload.email, userName: payload.name, password: '', isActivated: true
             }),
                 userDto = new UserDto(user),
